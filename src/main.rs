@@ -1,14 +1,18 @@
-use std::env;
 use std::net::TcpStream;
+use clap::Parser;
+
+#[derive(Parser, Debug)]
+#[command(version)]
+struct Args {
+    host: String,
+
+    port: String,
+}
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    if args.len() != 3 {
-        eprintln!("Usage: poke [host] [port]");
-        std::process::exit(1);
-    }
+    let args = Args::parse();
 
-    let addr: String = args[1..].join(":");
+    let addr: String = args.host + ":" + &args.port;
     match TcpStream::connect(&addr) {
         Ok(_) => println!("Connection to {} [tcp] succeeded.", addr),
         Err(e) => eprintln!("Connection to {} [tcp] failed: {}.", addr, e),
