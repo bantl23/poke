@@ -23,7 +23,7 @@ jobs:
 
       - name: Build for ${{ matrix.os }}
         run: |
-          cross build --release
+          cargo build --release
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
